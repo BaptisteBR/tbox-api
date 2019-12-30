@@ -4,7 +4,6 @@ class UserRepository {
 
     constructor(dao) {
         this.dao = dao;
-        this.hash = sha256.create();
     }
 
     createTable() {
@@ -12,11 +11,13 @@ class UserRepository {
     }
 
     create(username, email, password, picture) {
-        return this.dao.run('INSERT INTO user (username, email, password, picture) VALUES (?, ?, ?, ?)', [username, email, this.hash.update(password).hex(), picture]);
+        var hash = sha256.create();
+        return this.dao.run('INSERT INTO user (username, email, password, picture) VALUES (?, ?, ?, ?)', [username, email, hash.update(password).hex(), picture]);
     }
 
     getByUsernameAndPassword(username, password) {
-        return this.dao.get('SELECT * FROM user WHERE username = ? AND password = ?', [username, this.hash.update(password).hex()]);
+        var hash = sha256.create();
+        return this.dao.get('SELECT * FROM user WHERE username = ? AND password = ?', [username, hash.update(password).hex()]);
     }
 }
 

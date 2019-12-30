@@ -4,9 +4,9 @@ const bodyParser = require("body-parser");
 
 const DAO = require('./dao');
 
-const UserRepository = require('./repo/UserRepository');
-const TaskRepository = require('./repo/TaskRepository');
-const PhotoRepository = require('./repo/PhotoRepository');
+const UserRepository = require('./rep/UserRepository');
+const TaskRepository = require('./rep/TaskRepository');
+const PhotoRepository = require('./rep/PhotoRepository');
 
 // Server port
 const HTTP_PORT = 8000;
@@ -28,7 +28,7 @@ userRepository.createTable()
 
 // Start server
 app.listen(HTTP_PORT, () => {
-    console.log('Server running on port %PORT%'.replace('%PORT%', HTTP_PORT));
+    console.log('Server running on port {PORT}'.replace('{PORT}', HTTP_PORT));
 });
 
 // Root endpoint
